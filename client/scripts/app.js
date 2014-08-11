@@ -3,13 +3,13 @@ var app = {
   initialMessageCount: 25,
   lastMessageID: undefined,
   rooms: {
-    Lobby:"Lobby"
+    lobby:"lobby"
   }
 };
 
 var user = {
   username: location.search.split("username=")[1],
-  room: "Lobby",
+  room: "lobby",
   friendsList: {}
 };
 
@@ -111,7 +111,7 @@ app.addMessage = function(message){
   var userName = "<span class='" + classes + "''>" + app.escapeString(message.username) + "</span>";
   var text = "<span id='message'>" + app.escapeString(message.text) + "</span>";
 
-  if(app.escapeString(user.room) === "Lobby"){
+  if(app.escapeString(user.room) === "lobby"){
     $("#chats").prepend("<div>"+ userName + ": " + text + "</div>");
   } else {
     if(app.escapeString(message.roomname) === user.room){
@@ -158,6 +158,8 @@ app.handleSubmit = function(){
 
   //pass built message to send
   app.send(message);
+  app.fetch();
+  $("input.sendText").val("");
 };
 
 app.send = function(message){
@@ -183,10 +185,10 @@ app.toggleFriend = function(friend) {
   } else {
     $(".inFriendsList:contains(" + friend + ")").remove();
   }
-}
+};
 
 app.styleFriend = function(friendSelector) {
   friendSelector.toggleClass("friend");
-}
+};
 
 app.init();
